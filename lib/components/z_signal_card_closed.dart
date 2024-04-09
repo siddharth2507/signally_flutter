@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:signalbyt/utils/ironsourceutils.dart';
 import 'z_card.dart';
 import '../models/signal_aggr_open.dart';
 
@@ -120,21 +121,26 @@ class _ZSignalClosedCardState extends State<ZSignalClosedCard> {
                 SizedBox(height: 8),
                 ConfigurableExpansionTile(
                   headerExpanded: Flexible(
-                    child: ZCard(
-                      borderRadiusColor: isLightTheme
-                          ? appColorCardBorderLight
-                          : appColorCardBorderDark,
-                      color: isLightTheme
-                          ? appColorCardButtonLight
-                          : appColorCardButtonDark,
-                      padding:
-                          EdgeInsets.symmetric(vertical: 9, horizontal: 12),
-                      margin: EdgeInsets.zero,
-                      child: Row(children: [
-                        Text("View Targets", style: TextStyle()),
-                        Spacer(),
-                        Icon(Icons.keyboard_arrow_up, size: 16)
-                      ]),
+                    child: InkWell(
+                      onTap: () {
+                        IronsourceUtils.showInterstitial();
+                      },
+                      child: ZCard(
+                        borderRadiusColor: isLightTheme
+                            ? appColorCardBorderLight
+                            : appColorCardBorderDark,
+                        color: isLightTheme
+                            ? appColorCardButtonLight
+                            : appColorCardButtonDark,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 9, horizontal: 12),
+                        margin: EdgeInsets.zero,
+                        child: Row(children: [
+                          Text("View Targets", style: TextStyle()),
+                          Spacer(),
+                          Icon(Icons.keyboard_arrow_up, size: 16)
+                        ]),
+                      ),
                     ),
                   ),
                   /*header: (isExpanded, _, heightFactor) => Flexible(

@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:ironsource_mediation/ironsource_mediation.dart';
 import 'package:provider/provider.dart';
 import 'package:signalbyt/models/auth_user.dart';
 import 'package:signalbyt/models_providers/auth_provider.dart';
 import 'package:signalbyt/pages/group_chat/chat_page_arguments.dart';
+import 'package:signalbyt/utils/ironsourceutils.dart';
 import 'package:signalbyt/utils/unityadsmediation.dart';
 import 'package:signalbyt/utils/unityadsutils.dart';
 import 'group_chat/group_chat_page.dart';
@@ -34,9 +36,18 @@ class _AppNavbarPageState extends State<AppNavbarPage> {
     _pageController =
         PageController(initialPage: appProvider.selectedPageIndex);
     super.initState();
-    UnityAdsServices.showInterstitial();
 
-    UnityAdsServices.loadAds();
+    // UnityAdsServices.showInterstitial();
+    // UnityAdsServices.loadAds();
+
+    // IronsourceUtils().loadInterstitial();
+    // IronsourceBannerUtils().loadBanner();
+
+    try {
+      IronsourceUtils.showInterstitial();
+    } catch (e) {
+      print("errorappbar ${e.toString()}");
+    }
   }
 
   @override
@@ -49,9 +60,15 @@ class _AppNavbarPageState extends State<AppNavbarPage> {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        label: Text('Community',style: TextStyle(color: AppCOLORS.cardDark),),
+        label: Text(
+          'Community',
+          style: TextStyle(color: AppCOLORS.cardDark),
+        ),
         // isExtended: true,
-        icon: SvgPicture.asset('assets/svg/chat_bubble.svg', colorFilter: ColorFilter.mode(AppCOLORS.cardDark, BlendMode.srcIn), height: 20, width: 20),
+        icon: SvgPicture.asset('assets/svg/chat_bubble.svg',
+            colorFilter: ColorFilter.mode(AppCOLORS.cardDark, BlendMode.srcIn),
+            height: 20,
+            width: 20),
         backgroundColor: appColorYellow,
         onPressed: () {
           if (authUser?.isAnonymous == false) {
@@ -98,14 +115,13 @@ class _AppNavbarPageState extends State<AppNavbarPage> {
       bottomNavigationBar: CustomNavigationBar(
         blurEffect: false,
         onTap: (v) {
-
-
           appProvider.selectedPageIndex = v;
           if (_pageController.hasClients)
             _pageController.animateToPage(v,
                 duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
 
-          UnityAdsServices.showInterstitial();
+          IronsourceUtils.showInterstitial();
+          // UnityAdsServices.showInterstitial();
         },
         // iconSize: 20.0,
         selectedColor: Colors.white,

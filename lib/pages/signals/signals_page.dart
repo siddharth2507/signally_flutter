@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:ironsource_mediation/ironsource_mediation.dart';
 import 'package:provider/provider.dart';
+import 'package:signalbyt/utils/ironsourceutils.dart';
 import 'package:signalbyt/utils/unityadsutils.dart';
 import '../../components/z_signal_subscribe_card.dart';
 import '../../models/auth_user.dart';
@@ -80,7 +82,8 @@ class _SignalsPageState extends State<SignalsPage>
                 Get.to(() => SignalsClosedPage(type: selectSignalAggrId ?? ''),
                     fullscreenDialog: true,
                     duration: Duration(milliseconds: 500));
-                UnityAdsServices.showRewarded();
+                // UnityAdsServices.showRewarded();
+                // IronsourceUtils.showInterstitial();
               },
               color: Colors.transparent,
               shadowColor: Colors.transparent,

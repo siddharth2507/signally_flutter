@@ -7,7 +7,7 @@ class UnityAdsServices {
 
   static initUnityads() async {
     UnityAds.init(
-      testMode: false,
+      // testMode: false,
       gameId: gameID,
       firebaseTestLabMode: FirebaseTestLabMode.disableAds,
       onComplete: () {
@@ -60,12 +60,18 @@ class UnityAdsServices {
   static showRewarded() {
     UnityAds.showVideoAd(
       placementId: rewardedAdUnitId,
-      onStart: (placementId) => print('Video Ad $placementId started'),
-      onClick: (placementId) => print('Video Ad $placementId click'),
-      onSkipped: (placementId) => print('Video Ad $placementId skipped'),
-      onComplete: (placementId) => print('Video Ad $placementId completed'),
-      onFailed: (placementId, error, message) =>
-          print('Video Ad $placementId failed: $error $message'),
+      onStart: (placementId) => print('UnityAds Video Ad $placementId started'),
+      onClick: (placementId) => print('UnityAds Video Ad $placementId click'),
+      onSkipped: (placementId) {
+        print('UnityAds Video Ad $placementId skipped');
+      },
+      onComplete: (placementId) {
+        print('UnityAds Video Ad $placementId completed');
+      },
+      onFailed: (placementId, error, message) {
+        print('UnityAds Video Ad $placementId failed: $error $message');
+        loadRewarded();
+      },
     );
   }
 }

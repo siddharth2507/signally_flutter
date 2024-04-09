@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ironsource_mediation/ironsource_mediation.dart';
 import 'package:provider/provider.dart';
 import 'package:signalbyt/pages/_app_navbar_page.dart';
+import 'package:signalbyt/utils/ironsourceutils.dart';
 import 'package:signalbyt/utils/unityadsmediation.dart';
 import 'package:signalbyt/utils/unityadsutils.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
@@ -36,16 +38,31 @@ class _SplashPageState extends State<SplashPage>
 
     super.initState();
     // UnityAdsServices.initUnityads();
-    UnityAds.load(
-        placementId: UnityAdsServices.interstitialAdUnitId,
-        onComplete: (placementId) {
-          print('Load Complete $placementId');
-          startNavigate();
-        },
-        onFailed: (placementId, error, message) {
-          print('Load Failed $placementId: $error $message');
-          startNavigate();
-        });
+    try {
+      IronSource.init(
+          appKey: '1e1f7a19d',
+          adUnits: [IronSourceAdUnit.Interstitial, IronSourceAdUnit.Banner]);
+      IronsourceUtils().initIronsource();
+
+      IronSource.setAdaptersDebug(true);
+      // IronSource.setConsent(true);
+      // IronSource.launchTestSuite();
+    } catch (e) {
+      print("errorappbar ${e.toString()}");
+    }
+
+    startNavigate();
+
+    // UnityAds.load(
+    //     placementId: UnityAdsServices.interstitialAdUnitId,
+    //     onComplete: (placementId) {
+    //       print('Load Complete $placementId');
+    //       startNavigate();
+    //     },
+    //     onFailed: (placementId, error, message) {
+    //       print('Load Failed $placementId: $error $message');
+    //       startNavigate();
+    //     });
   }
 
   startNavigate() {

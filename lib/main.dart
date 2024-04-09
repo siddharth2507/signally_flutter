@@ -12,6 +12,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:provider/provider.dart';
 import 'package:signalbyt/pages/group_chat/chat_provider.dart';
+import 'package:signalbyt/utils/ironsourceutils.dart';
 import 'package:signalbyt/utils/unityadsmediation.dart';
 import 'package:signalbyt/utils/unityadsutils.dart';
 
@@ -58,6 +59,7 @@ void main() async {
   await RevenueCatSevice.init();
   // UnityAdsUtils.initUnityMediation();
   UnityAdsServices.initUnityads();
+  // IronsourceUtils.initIronsource();
 
   runApp(
     EasyLocalization(
