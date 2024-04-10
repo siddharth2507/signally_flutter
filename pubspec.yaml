@@ -57,6 +57,7 @@ dependencies:
   unity_ads_plugin: ^0.3.13
   unity_mediation: ^0.1.1
   ironsource_mediation: ^1.2.1
+  shared_preferences: ^2.2.1
 
 
 
