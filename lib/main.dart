@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -57,6 +58,7 @@ void main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
   await RevenueCatSevice.init();
+  await initTrackingTransparency();
   // UnityAdsUtils.initUnityMediation();
   UnityAdsServices.initUnityads();
   // IronsourceUtils.initIronsource();
@@ -72,6 +74,20 @@ void main() async {
           create: (_) => ThemeProvider(themeMode), child: const MyApp()),
     ),
   );
+}
+
+Future<void> initTrackingTransparency() async {
+  try {
+    final TrackingStatus status =
+        await AppTrackingTransparency.trackingAuthorizationStatus;
+    if (status == TrackingStatus.notDetermined) {
+      var _authStatus =
+          await AppTrackingTransparency.requestTrackingAuthorization();
+    }
+  } on PlatformException {}
+
+  final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
+  print("UUID:" + uuid);
 }
 
 class MyApp extends StatefulWidget {
