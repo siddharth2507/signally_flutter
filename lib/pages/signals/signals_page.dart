@@ -83,7 +83,7 @@ class _SignalsPageState extends State<SignalsPage>
                     fullscreenDialog: true,
                     duration: Duration(milliseconds: 500));
                 // UnityAdsServices.showRewarded();
-                // IronsourceUtils.showInterstitial();
+                IronsourceUtils.showInterstitial();
               },
               color: Colors.transparent,
               shadowColor: Colors.transparent,

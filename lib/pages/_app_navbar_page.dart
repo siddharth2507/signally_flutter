@@ -5,6 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ironsource_mediation/ironsource_mediation.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:signalbyt/components/z_button.dart';
 import 'package:signalbyt/models/auth_user.dart';
 import 'package:signalbyt/models_providers/auth_provider.dart';
 import 'package:signalbyt/pages/group_chat/chat_page_arguments.dart';
@@ -29,6 +31,8 @@ class AppNavbarPage extends StatefulWidget {
 
 class _AppNavbarPageState extends State<AppNavbarPage> {
   late PageController _pageController;
+  late SharedPreferences _prefs;
+  late DateTime? lastDate;
 
   @override
   void initState() {
@@ -37,9 +41,11 @@ class _AppNavbarPageState extends State<AppNavbarPage> {
         PageController(initialPage: appProvider.selectedPageIndex);
     super.initState();
 
+    lastDate = DateTime.now().subtract(Duration(days: 1));
+    _initSharedPreferences();
+
     // UnityAdsServices.showInterstitial();
     // UnityAdsServices.loadAds();
-
     // IronsourceUtils().loadInterstitial();
     // IronsourceBannerUtils().loadBanner();
 
@@ -47,6 +53,47 @@ class _AppNavbarPageState extends State<AppNavbarPage> {
       IronsourceUtils.showInterstitial();
     } catch (e) {
       print("errorappbar ${e.toString()}");
+    }
+
+    // Future.delayed(Duration(seconds: 1), () {
+    //   showPopupfor24hour();
+    // });
+  }
+
+  Future<void> _initSharedPreferences() async {
+    _prefs = await SharedPreferences.getInstance();
+    int lastDateMillis = 0;
+
+    try {
+      lastDateMillis = _prefs.getInt('lastDateMillis') ??
+          DateTime.now().subtract(Duration(days: 2)).millisecondsSinceEpoch;
+    } catch (e) {
+      _prefs.setInt('lastDateMillis', 0);
+    }
+    print("lastDateMillis ${lastDateMillis}");
+
+    lastDate = (lastDateMillis != 0
+        ? DateTime.fromMillisecondsSinceEpoch(lastDateMillis)
+        : DateTime.now());
+
+    _checkDateChange();
+  }
+
+  void _checkDateChange() {
+    DateTime currentDate = DateTime.now();
+
+    print("checkDateChange ||| ${currentDate.day} ||| ${lastDate?.day}");
+    if (lastDate!.day != currentDate.day) {
+      // Date has changed, show popup
+      Future.delayed(Duration(seconds: 1), () {
+        showPopupfor24hour();
+      });
+      // showPopupfor24hour();
+
+      // Update last checked date in shared preferences
+      setState(() {
+        lastDate = currentDate;
+      });
     }
   }
 
@@ -202,4 +249,44 @@ class _AppNavbarPageState extends State<AppNavbarPage> {
     // NotificationsPage(),
     MyAccountPage(),
   ];
+
+  showPopupfor24hour() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: Colors.black,
+        alignment: Alignment.center,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        title: Text('Desclaimer !!'.tr.toUpperCase()),
+        titleTextStyle: const TextStyle(
+          color: Colors.yellow,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+        content: Text(
+          'This is not financial advise incase of loss we will not take any responsibility.',
+          style: TextStyle(
+            color: Colors.yellow[600],
+            fontSize: 14,
+          ),
+        ),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: <Widget>[
+          ZButton(
+            padding: EdgeInsets.all(12),
+            text: 'Ok',
+            textStyle: TextStyle(color: Colors.black),
+            backgroundColor: AppCOLORS.yellow,
+            onTap: () {
+              _prefs.setInt(
+                  'lastDateMillis', DateTime.now().millisecondsSinceEpoch);
+
+              Get.back();
+            },
+          ),
+        ],
+      ),
+    );
+  }
 }

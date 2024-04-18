@@ -7,8 +7,11 @@ import '../models/_parsers.dart';
 import '../constants/app_constants.dart';
 
 class RevenueCatSevice {
-  static String _androidKey = AppConstants.REVENUECAT_ANDROID_KEY;
-  static String _iosKey = AppConstants.REVENUECAT_IOS_KEY;
+  // static String _androidKey = AppConstants.REVENUECAT_ANDROID_KEY;
+  // static String _iosKey = AppConstants.REVENUECAT_IOS_KEY;
+
+  static String _androidKey = "goog_EnyWLopanwZVFjfqzGGVzSDCHWO";
+  static String _iosKey = "appl_asOXVbwKWKCxHNIPoeZJYAhjZaA";
   static String _apiKey = Platform.isIOS ? _iosKey : _androidKey;
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
