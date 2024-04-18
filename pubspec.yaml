@@ -58,6 +58,7 @@ dependencies:
   unity_mediation: ^0.1.1
   ironsource_mediation: ^1.2.1
   shared_preferences: ^2.2.1
+  app_tracking_transparency: ^2.0.2+1
 
 
 

@@ -32,7 +32,7 @@ class AppNavbarPage extends StatefulWidget {
 class _AppNavbarPageState extends State<AppNavbarPage> {
   late PageController _pageController;
   late SharedPreferences _prefs;
-  late DateTime _lastDate;
+  late DateTime? lastDate;
 
   @override
   void initState() {
@@ -40,8 +40,9 @@ class _AppNavbarPageState extends State<AppNavbarPage> {
     _pageController =
         PageController(initialPage: appProvider.selectedPageIndex);
     super.initState();
+
+    lastDate = DateTime.now().subtract(Duration(days: 1));
     _initSharedPreferences();
-    _checkDateChange();
 
     // UnityAdsServices.showInterstitial();
     // UnityAdsServices.loadAds();
@@ -61,22 +62,37 @@ class _AppNavbarPageState extends State<AppNavbarPage> {
 
   Future<void> _initSharedPreferences() async {
     _prefs = await SharedPreferences.getInstance();
-    int? lastDateMillis = _prefs.getInt('lastDateMillis');
-    _lastDate = lastDateMillis != null
+    int lastDateMillis = 0;
+
+    try {
+      lastDateMillis = _prefs.getInt('lastDateMillis') ??
+          DateTime.now().subtract(Duration(days: 2)).millisecondsSinceEpoch;
+    } catch (e) {
+      _prefs.setInt('lastDateMillis', 0);
+    }
+    print("lastDateMillis ${lastDateMillis}");
+
+    lastDate = (lastDateMillis != 0
         ? DateTime.fromMillisecondsSinceEpoch(lastDateMillis)
-        : DateTime.now();
+        : DateTime.now());
+
+    _checkDateChange();
   }
 
   void _checkDateChange() {
     DateTime currentDate = DateTime.now();
-    if (_lastDate.day != currentDate.day) {
+
+    print("checkDateChange ||| ${currentDate.day} ||| ${lastDate?.day}");
+    if (lastDate!.day != currentDate.day) {
       // Date has changed, show popup
-      showPopupfor24hour();
+      Future.delayed(Duration(seconds: 1), () {
+        showPopupfor24hour();
+      });
+      // showPopupfor24hour();
 
       // Update last checked date in shared preferences
-
       setState(() {
-        _lastDate = currentDate;
+        lastDate = currentDate;
       });
     }
   }
@@ -265,6 +281,7 @@ class _AppNavbarPageState extends State<AppNavbarPage> {
             onTap: () {
               _prefs.setInt(
                   'lastDateMillis', DateTime.now().millisecondsSinceEpoch);
+
               Get.back();
             },
           ),
