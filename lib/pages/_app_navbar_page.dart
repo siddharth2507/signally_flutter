@@ -1,5 +1,7 @@
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -58,6 +60,23 @@ class _AppNavbarPageState extends State<AppNavbarPage> {
     // Future.delayed(Duration(seconds: 1), () {
     //   showPopupfor24hour();
     // });
+    Future.delayed(Duration(seconds: 1), () {
+      initTrackingTransparency();
+    });
+  }
+
+  Future<void> initTrackingTransparency() async {
+    try {
+      final TrackingStatus status =
+          await AppTrackingTransparency.trackingAuthorizationStatus;
+      if (status == TrackingStatus.notDetermined) {
+        var _authStatus =
+            await AppTrackingTransparency.requestTrackingAuthorization();
+      }
+    } on PlatformException {}
+
+    final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
+    print("UUID:" + uuid);
   }
 
   Future<void> _initSharedPreferences() async {

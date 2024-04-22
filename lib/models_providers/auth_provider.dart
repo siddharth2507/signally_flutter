@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:signalbyt/main.dart';
+
 import '../utils/z_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ import '../models_services/revenuecat_service.dart';
 
 class AuthProvider with ChangeNotifier {
   AuthUser? _authUser;
+
   AuthUser? get authUser => _authUser;
   StreamSubscription<AuthUser>? _streamSubscriptionAuthUser;
 
@@ -68,14 +71,18 @@ class AuthProvider with ChangeNotifier {
 
 /* ----------------------------- NOTE REVENUECAT ---------------------------- */
   EntitlementInfo? _entitlementInfo;
+
   EntitlementInfo? get entitlementInfo => _entitlementInfo;
   bool _isloadingRestorePurchases = false;
+
   bool get isloadingRestorePurchases => _isloadingRestorePurchases;
 
   List<Package> _packages = [];
+
   List<Package> get packages => _packages;
 
   bool _isLoadingEntitlementInfo = false;
+
   bool get isLoadingEntitlementInfo => _isLoadingEntitlementInfo;
 
   void _setRevenueCatId() async {
@@ -120,10 +127,14 @@ class AuthProvider with ChangeNotifier {
       print('CALLLED checkPurchasesStatus _packages ${_packages}');
     }
 
+    isSubscriptionPackageLoad = (_packages.length > 0);
+
     CustomerInfo info = await Purchases.getCustomerInfo();
 
-    List<EntitlementInfo> _entitlements = info.entitlements.active.values.toList();
-    _entitlements.sort((a, b) => b.latestPurchaseDate.compareTo(a.latestPurchaseDate));
+    List<EntitlementInfo> _entitlements =
+        info.entitlements.active.values.toList();
+    _entitlements
+        .sort((a, b) => b.latestPurchaseDate.compareTo(a.latestPurchaseDate));
     if (_entitlements.isEmpty) _entitlementInfo = null;
 
     if (_entitlements.length >= 1) {
@@ -131,8 +142,10 @@ class AuthProvider with ChangeNotifier {
       RevenueCatSevice.updateUserSub(_entitlementInfo!);
     }
 
-    List<EntitlementInfo> _entitlementsAll = info.entitlements.all.values.toList();
-    _entitlementsAll.sort((a, b) => b.latestPurchaseDate.compareTo(a.latestPurchaseDate));
+    List<EntitlementInfo> _entitlementsAll =
+        info.entitlements.all.values.toList();
+    _entitlementsAll
+        .sort((a, b) => b.latestPurchaseDate.compareTo(a.latestPurchaseDate));
     if (_entitlements.isEmpty && _entitlementsAll.isNotEmpty) {
       RevenueCatSevice.updateUserSub(_entitlementsAll[0]);
     }

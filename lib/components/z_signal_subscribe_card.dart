@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:signalbyt/main.dart';
 import 'z_card.dart';
 import '../pages/subsciption/subscription_page.dart';
 
@@ -23,7 +24,8 @@ class _ZSignalSubscribeCardState extends State<ZSignalSubscribeCard> {
       children: [
         ZCard(
           padding: EdgeInsets.all(10),
-          borderRadiusColor: isLightTheme ? appColorCardBorderLight : appColorCardBorderDark,
+          borderRadiusColor:
+              isLightTheme ? appColorCardBorderLight : appColorCardBorderDark,
           margin: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,23 +44,31 @@ class _ZSignalSubscribeCardState extends State<ZSignalSubscribeCard> {
                   SizedBox(width: 6),
                   Text(
                     widget.signal.symbol,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, height: 0),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16, height: 0),
                   ),
                   SizedBox(width: 6),
                   Text(
                     '${ZFormat.dateFormatSignal(widget.signal.entryDateTime)}',
-                    style: TextStyle(color: Theme.of(context).textTheme.bodySmall!.color, fontSize: 13),
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.bodySmall!.color,
+                        fontSize: 13),
                   ),
                   Spacer(),
                 ],
               ),
               SizedBox(height: 8),
-              ZCard(
-                color: isLightTheme ? Colors.grey : Colors.white,
-                onTap: () => Get.to(() => SubscriptionPage(), fullscreenDialog: true),
-                margin: EdgeInsets.only(left: 0, right: 0, bottom: 0),
-                padding: EdgeInsets.symmetric(horizontal: 70, vertical: 8),
-                child: Text('Tap to join Premium', style: TextStyle(color: Colors.black)),
+              Visibility(
+                visible: isSubscriptionPackageLoad,
+                child: ZCard(
+                  color: isLightTheme ? Colors.grey : Colors.white,
+                  onTap: () =>
+                      Get.to(() => SubscriptionPage(), fullscreenDialog: true),
+                  margin: EdgeInsets.only(left: 0, right: 0, bottom: 0),
+                  padding: EdgeInsets.symmetric(horizontal: 70, vertical: 8),
+                  child: Text('Tap to join Premium',
+                      style: TextStyle(color: Colors.black)),
+                ),
               ),
             ],
           ),

@@ -29,6 +29,8 @@ import 'pages/_app/splash_page.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+var isSubscriptionPackageLoad = false;
+
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();

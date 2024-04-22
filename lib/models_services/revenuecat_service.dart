@@ -36,6 +36,17 @@ class RevenueCatSevice {
     }
   }
 
+  static Future<List<Offering>> getOfferingsfromName(String name) async {
+    try {
+      final current = await Purchases.getCurrentOfferingForPlacement(name);
+      // final current = offering.current;
+      return current == null ? [] : [current];
+    } catch (e) {
+      print('getOfferings error: $e');
+      return [];
+    }
+  }
+
   static Future<List<Package>> getPackages() async {
     try {
       List<Offering> offerings = await RevenueCatSevice.getOfferings();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:signalbyt/models_services/revenuecat_service.dart';
 import '../../models_providers/app_controls_provider.dart';
 
 import '../../components/z_button.dart';
@@ -22,8 +23,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
   @override
   void initState() {
-    Future.microtask(() => Provider.of<AuthProvider>(context, listen: false).checkPurchasesStatus(getPackages: true));
+    Future.microtask(() => Provider.of<AuthProvider>(context, listen: false)
+        .checkPurchasesStatus(getPackages: true));
     super.initState();
+
   }
 
   @override
@@ -50,7 +53,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Row(),
-                    SizedBox(height: 30, width: 30, child: CircularProgressIndicator(color: Colors.orange)),
+                    SizedBox(
+                        height: 30,
+                        width: 30,
+                        child: CircularProgressIndicator(color: Colors.orange)),
                     SizedBox(height: Get.height * 0.225),
                   ],
                 ),
@@ -80,7 +86,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(),
-        SizedBox(child: CircularProgressIndicator(color: Colors.white), height: 20, width: 20),
+        SizedBox(
+            child: CircularProgressIndicator(color: Colors.white),
+            height: 20,
+            width: 20),
         SizedBox(height: 8),
         Text('loading...'),
         SizedBox(height: 50),
@@ -90,7 +99,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
   _buildNoSubscription(List<Package> packages) {
     final authProvider = Provider.of<AuthProvider>(context);
-    AppControlsProvider appControlsProvider = Provider.of<AppControlsProvider>(context);
+    AppControlsProvider appControlsProvider =
+        Provider.of<AppControlsProvider>(context);
     final appControls = appControlsProvider.appControls;
     // final AppControlLinks appControlLinks = appProvider.appControlLinks;
     return Stack(
@@ -105,7 +115,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 16),
-                    Text('Subscribe to one of our plans below and get instant \naccess to premium signals.', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                    Text(
+                        'Subscribe to one of our plans below and get instant \naccess to premium signals.',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600)),
                   ],
                 ),
               ),
@@ -116,7 +129,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   borderRadiusColor: Color(0xFF2C2F38),
                   color: Colors.transparent,
                   child: Row(children: [
-                    Image.asset('assets/images/icon_subscription_thumbs_up.png', width: 40, height: 40),
+                    Image.asset('assets/images/icon_subscription_thumbs_up.png',
+                        width: 40, height: 40),
                     SizedBox(width: 16),
                     Container(
                       width: MediaQuery.of(context).size.width * .675,
@@ -139,11 +153,16 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   children: [
                     Text('Daily VIP Signals', style: TextStyle(fontSize: 13)),
                     SizedBox(height: 6),
-                    Text('Weekly Trade Breakdown Videos', style: TextStyle(fontSize: 13)),
+                    Text('Weekly Trade Breakdown Videos',
+                        style: TextStyle(fontSize: 13)),
                     SizedBox(height: 6),
-                    Text('Be Notified Before a Signal Goes out so you can prepare to enter', style: TextStyle(fontSize: 13)),
+                    Text(
+                        'Be Notified Before a Signal Goes out so you can prepare to enter',
+                        style: TextStyle(fontSize: 13)),
                     SizedBox(height: 6),
-                    Text('Every Signal Comes With Entry Point, Stop Loss, Take profit 1-3', style: TextStyle(fontSize: 13)),
+                    Text(
+                        'Every Signal Comes With Entry Point, Stop Loss, Take profit 1-3',
+                        style: TextStyle(fontSize: 13)),
                   ],
                 ),
               ),
@@ -163,14 +182,16 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                       ZLaunchUrl.launchUrl(appControls.linkPivacy);
                     },
                     color: Colors.transparent,
-                    child: Text('Privacy Policy', style: TextStyle(color: Color(0xFFC1C1C1))),
+                    child: Text('Privacy Policy',
+                        style: TextStyle(color: Color(0xFFC1C1C1))),
                   ),
                   ZCard(
                     onTap: () {
                       ZLaunchUrl.launchUrl(appControls.linkTerms);
                     },
                     color: Colors.transparent,
-                    child: Text('Term of Use', style: TextStyle(color: Color(0xFFC1C1C1))),
+                    child: Text('Term of Use',
+                        style: TextStyle(color: Color(0xFFC1C1C1))),
                   ),
                 ],
               ),
@@ -189,9 +210,11 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         Row(),
         Image.asset('assets/images/active_subscription.png', height: 300),
         SizedBox(height: 24),
-        Text('Congrats you have a lifetime subscription', style: TextStyle(fontSize: 16)),
+        Text('Congrats you have a lifetime subscription',
+            style: TextStyle(fontSize: 16)),
         SizedBox(height: 8),
-        Text('Continue using premium features!', style: TextStyle(fontSize: 16)),
+        Text('Continue using premium features!',
+            style: TextStyle(fontSize: 16)),
         SizedBox(height: Get.height * 0.1),
         SizedBox(height: Get.height * 0.15),
       ],
@@ -253,18 +276,28 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   }
 
   getCardColor(Package package) {
-    if (package.packageType == PackageType.monthly) return Colors.lightBlue.shade300;
-    if (package.packageType == PackageType.annual) return Colors.purple.shade400;
+    if (package.packageType == PackageType.monthly)
+      return Colors.lightBlue.shade300;
+    if (package.packageType == PackageType.annual)
+      return Colors.purple.shade400;
     return Colors.blue.shade400;
   }
 
   getPricePeriod(Package package) {
-    if (package.packageType == PackageType.monthly) return '${package.storeProduct.priceString}/m';
-    if (package.packageType == PackageType.annual) return '${package.storeProduct.priceString}/yr';
+    if (package.packageType == PackageType.monthly)
+      return '${package.storeProduct.priceString}/m';
+    if (package.packageType == PackageType.annual)
+      return '${package.storeProduct.priceString}/yr';
     return 'yearly';
   }
 
   getYearlyPackage(packages) {
-    return packages.firstWhere((element) => element.packageType == PackageType.annual);
+    return packages
+        .firstWhere((element) => element.packageType == PackageType.annual);
+  }
+
+  Future<void> getRevenueDetails() async {
+    var packages = await Purchases.getOfferings();
+    print("packages: $packages");
   }
 }
