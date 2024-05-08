@@ -26,7 +26,6 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     Future.microtask(() => Provider.of<AuthProvider>(context, listen: false)
         .checkPurchasesStatus(getPackages: true));
     super.initState();
-
   }
 
   @override

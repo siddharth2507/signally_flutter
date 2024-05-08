@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1051151541048-l6molgfg3pt2fatu3738qdhtmg4nevci.apps.googleusercontent.com</string>
+	<string>1051151541048-4oa5it1ndbphlkuuqqivlnbj8qjk1n1a.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1051151541048-l6molgfg3pt2fatu3738qdhtmg4nevci</string>
+	<string>com.googleusercontent.apps.1051151541048-4oa5it1ndbphlkuuqqivlnbj8qjk1n1a</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>1051151541048-q3l79gotce0pcbnomcgntu7v37orngrr.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,23 +15,23 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.fvsforex.app</string>
+	<string>com.fvsforex.app.ios</string>
 	<key>PROJECT_ID</key>
 	<string>signally-ee408</string>
 	<key>STORAGE_BUCKET</key>
 	<string>signally-ee408.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1051151541048:ios:f4070bd1b81a38479f17cd</string>
+	<string>1:1051151541048:ios:0d58bbf342b5652a9f17cd</string>
 	<key>DATABASE_URL</key>
 	<string>https://signally-ee408-default-rtdb.firebaseio.com</string>
 </dict>

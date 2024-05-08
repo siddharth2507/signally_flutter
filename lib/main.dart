@@ -35,7 +35,7 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
-  await dotenv.load(fileName: ".env");
+  // await dotenv.load(fileName: ".env");
 
   HttpOverrides.global = new MyHttpOverrides();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -60,6 +60,7 @@ void main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
   await RevenueCatSevice.init();
+
   await initTrackingTransparency();
   // UnityAdsUtils.initUnityMediation();
   UnityAdsServices.initUnityads();

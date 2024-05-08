@@ -6,12 +6,15 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import '../models/_parsers.dart';
 import '../constants/app_constants.dart';
 
+/// Check 1: ADD BANK DETAILS IN BUSINESS DETAILS IN APPSTORE & PLAYSTORE
+/// Check 2: Accept terms and conditions in business details
+
 class RevenueCatSevice {
   // static String _androidKey = AppConstants.REVENUECAT_ANDROID_KEY;
   // static String _iosKey = AppConstants.REVENUECAT_IOS_KEY;
 
   static String _androidKey = "goog_EnyWLopanwZVFjfqzGGVzSDCHWO";
-  static String _iosKey = "appl_asOXVbwKWKCxHNIPoeZJYAhjZaA";
+  static String _iosKey = "appl_PKwJlDUxNTlzSkqfbfKkFPPSNzf";
   static String _apiKey = Platform.isIOS ? _iosKey : _androidKey;
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -50,7 +53,10 @@ class RevenueCatSevice {
   static Future<List<Package>> getPackages() async {
     try {
       List<Offering> offerings = await RevenueCatSevice.getOfferings();
-      final _packages = offerings.map((e) => e.availablePackages).expand((element) => element).toList();
+      final _packages = offerings
+          .map((e) => e.availablePackages)
+          .expand((element) => element)
+          .toList();
       return _packages;
     } catch (e) {
       return [];
@@ -73,15 +79,19 @@ class RevenueCatSevice {
       if (fbUser == null) return;
 
       await _firestore.collection('users').doc(fbUser.uid).update({
-        'subBillingIssueDetectedAt': parseToDateTime(entitlementInfo.billingIssueDetectedAt),
+        'subBillingIssueDetectedAt':
+            parseToDateTime(entitlementInfo.billingIssueDetectedAt),
         'subExpirationDate': parseToDateTime(entitlementInfo.expirationDate),
         'subIsActive': entitlementInfo.isActive,
         'subIsSandbox': entitlementInfo.isSandbox,
-        'subLatestPurchaseDate': parseToDateTime(entitlementInfo.latestPurchaseDate),
-        'subOriginalPurchaseDate': parseToDateTime(entitlementInfo.originalPurchaseDate),
+        'subLatestPurchaseDate':
+            parseToDateTime(entitlementInfo.latestPurchaseDate),
+        'subOriginalPurchaseDate':
+            parseToDateTime(entitlementInfo.originalPurchaseDate),
         'subPeriodType': entitlementInfo.periodType.toString(),
         'subProductIdentifier': entitlementInfo.productIdentifier,
-        'subUnsubscribeDetectedAt': parseToDateTime(entitlementInfo.unsubscribeDetectedAt),
+        'subUnsubscribeDetectedAt':
+            parseToDateTime(entitlementInfo.unsubscribeDetectedAt),
         'subWillRenew': entitlementInfo.willRenew,
       });
 

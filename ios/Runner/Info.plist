@@ -7,7 +7,13 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>FVS Forex</string>
+	<string>Troodo forex
+
+
+
+Troodo Forex
+Sumeet Bhut, Wednesday at 17:48
+Troodo Forex</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -64,6 +70,17 @@
 	<string>Take photos so users can upload a profile picturs</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Take photos so users can upload a profile pictur</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Your Personalized ads serve to you. </string>
+	<key>SKAdNetworkItems</key>
+	<array>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>su67r6k2v3.skadnetwork</string>
+		</dict>
+	</array>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -88,16 +105,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>SKAdNetworkItems</key>
-	<array>
-		<dict>
-			<key>SKAdNetworkIdentifier</key>
-			<string>su67r6k2v3.skadnetwork</string>
-		</dict>
-	</array>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Your Personalized ads serve to you. </string>
 </dict>
 </plist>
